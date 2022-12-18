@@ -32,6 +32,8 @@ export function ContactForm({ onSubmit }) {
       case 'number':
         setNumber(e.target.value);
         break;
+      default:
+        return;
     }
   };
 

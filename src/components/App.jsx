@@ -50,11 +50,14 @@ export function App({ initialContacts }) {
 
   useEffect(() => {
     const storageContacts = localStorage.getItem('contacts');
+    console.log(storageContacts);
+
     const parsedContacts = JSON.parse(storageContacts);
     setContacts(parsedContacts);
   }, []);
 
   useEffect(() => {
+    console.log(contacts);
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
