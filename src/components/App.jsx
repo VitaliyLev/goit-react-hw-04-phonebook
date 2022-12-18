@@ -8,7 +8,7 @@ import { Filter } from './ContactsFilter/Filter';
 import { Box } from './App.styled';
 
 export function App({ initialContacts }) {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(initialContacts);
   const [filter, setFilter] = useState('');
 
   const addNewContact = ({ name, number }) => {
@@ -50,17 +50,15 @@ export function App({ initialContacts }) {
 
   useEffect(() => {
     const storageContacts = localStorage.getItem('contacts');
-    console.log(storageContacts);
     const parsedContacts = JSON.parse(storageContacts);
     if (parsedContacts !== null) {
       setContacts(parsedContacts);
       return;
     }
-    localStorage.setItem('contacts', JSON.stringify(initialContacts));
   }, []);
 
   useEffect(() => {
-    // localStorage.setItem('contacts', JSON.stringify(contacts));
+    localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   return (
