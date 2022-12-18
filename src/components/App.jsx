@@ -8,7 +8,7 @@ import { Filter } from './ContactsFilter/Filter';
 import { Box } from './App.styled';
 
 export function App({ initialContacts }) {
-  const [contacts, setContacts] = useState(initialContacts);
+  const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
 
   const addNewContact = ({ name, number }) => {
@@ -39,26 +39,28 @@ export function App({ initialContacts }) {
   };
 
   const deleteContact = idContact => {
-    // const arrayContactsNoDelete = contacts.filter(
-    //   contact => contact.id !== idContact
-    // );
-    // setContacts(arrayContactsNoDelete);
-    setContacts(prevContacts =>
-      prevContacts.filter(contact => contact.id !== idContact)
+    const arrayContactsNoDelete = contacts.filter(
+      contact => contact.id !== idContact
     );
+    setContacts(arrayContactsNoDelete);
+    // setContacts(prevContacts =>
+    //   prevContacts.filter(contact => contact.id !== idContact)
+    // );
   };
 
   useEffect(() => {
     const storageContacts = localStorage.getItem('contacts');
     console.log(storageContacts);
-
     const parsedContacts = JSON.parse(storageContacts);
-    setContacts(parsedContacts);
+    if (parsedContacts !== null) {
+      setContacts(parsedContacts);
+      return;
+    }
+    localStorage.setItem('contacts', JSON.stringify(initialContacts));
   }, []);
 
   useEffect(() => {
-    console.log(contacts);
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+    // localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   return (
